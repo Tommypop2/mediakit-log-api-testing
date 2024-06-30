@@ -61,7 +61,6 @@ type LoggerData = { handlers: LogHandler[] };
 export const LoggerContext = createContext<LoggerData>();
 export const LogProvider: ParentComponent = (props) => {
 	return (
-		// This would be a default implementation. Users could override this and provide a different `LogHandler`
 		<LoggerContext.Provider
 			value={{ handlers: [new ExampleLogger(), new ExampleServerLogger()] }}
 		>

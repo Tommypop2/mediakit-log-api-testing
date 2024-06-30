@@ -8,6 +8,7 @@ import {
 } from "solid-js";
 import { isServer } from "solid-js/web";
 class LogHandler {
+	onServer: boolean = true;
 	onLog(log: Log<any>) {
 		throw new Error("This method should be overridden");
 	}
@@ -29,6 +30,7 @@ class ExampleLogger extends LogHandler {
 	}
 }
 class ExampleServerLogger extends LogHandler {
+	onServer = false;
 	onLog = (log: Log<any>) => {
 		"use server";
 		if (log.metadata)
@@ -89,6 +91,8 @@ export const $log = <T,>(fn: () => T, metadata?: LogMetadata) => {
 	);
 	const data = untrack(fn);
 	ctx.handlers.forEach((h) =>
-		h.onLog({ data, metadata, origin: { server: isServer } })
+		isServer && !h.onServer
+			? {}
+			: h.onLog({ data, metadata, origin: { server: isServer } })
 	);
 };

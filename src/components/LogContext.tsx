@@ -8,6 +8,7 @@ import {
 } from "solid-js";
 import { isServer } from "solid-js/web";
 class LogHandler {
+	// This API needs improving. An `onServer` flag is not particularly ergonomic
 	onServer: boolean = true;
 	onLog(log: Log<any>) {
 		throw new Error("This method should be overridden");
@@ -89,6 +90,7 @@ export const $log = <T,>(fn: () => T, metadata?: LogMetadata) => {
 		)
 	);
 	const data = untrack(fn);
+	// Don't execute non-ssr handlers on the server
 	ctx.handlers.forEach((h) =>
 		isServer && !h.onServer
 			? {}

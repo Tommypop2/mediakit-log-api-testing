@@ -2,20 +2,30 @@ import {
 	ParentComponent,
 	createContext,
 	createEffect,
+	on,
+	untrack,
 	useContext,
 } from "solid-js";
+import { isServer } from "solid-js/web";
 class LogHandler {
 	onLog(log: Log<any>) {
-        throw new Error("This method should be overridden")
-    }
+		throw new Error("This method should be overridden");
+	}
 }
 class ExampleLogger extends LogHandler {
 	onLog(log: Log<any>) {
 		if (log.metadata)
 			console.log(
-				`Output: ${log.data}, on line ${log.metadata.origin.line} in file ${log.metadata.origin.filename}`
+				`(${log.origin.server ? "Server" : "Client"}) Output: ${
+					log.data
+				}, on line ${log.metadata.location.line} in file ${
+					log.metadata.location.filename
+				}`
 			);
-		else console.log(`Output: ${log.data}`);
+		else
+			console.log(
+				`(${log.origin.server ? "Server" : "Client"}) Output: ${log.data}`
+			);
 	}
 }
 class ExampleServerLogger extends LogHandler {
@@ -23,17 +33,25 @@ class ExampleServerLogger extends LogHandler {
 		"use server";
 		if (log.metadata)
 			console.log(
-				`Output: ${log.data}, on line ${log.metadata.origin.line} in file ${log.metadata.origin.filename}`
+				`(${log.origin.server ? "Server" : "Client"}) Output: ${
+					log.data
+				}, on line ${log.metadata.location.line} in file ${
+					log.metadata.location.filename
+				}`
 			);
-		else console.log(`Output: ${log.data}`);
+		else
+			console.log(
+				`(${log.origin.server ? "Server" : "Client"}) Output: ${log.data}`
+			);
 	};
 }
 type LogMetadata = {
-	origin: { filename: string; line: number };
+	location: { filename: string; line: number };
 };
 type Log<T> = {
 	// Compiler would provide metadata object in `$log` call
 	metadata?: LogMetadata;
+	origin: { server: boolean };
 	data: T;
 };
 // Allow the user to specify multiple handlers that are all called
@@ -57,9 +75,20 @@ export const useLoggerContext = () => {
 };
 export const $log = <T,>(fn: () => T, metadata?: LogMetadata) => {
 	const ctx = useLoggerContext();
-	createEffect(() => {
-        // Include extra deep tracking logic here in the future
-		const data = fn();
-		ctx.handlers.forEach((h) => h.onLog({ data, metadata }));
-	});
+	createEffect(
+		on(
+			fn,
+			(data) => {
+				// Include extra deep tracking logic here in the future
+				ctx.handlers.forEach((h) =>
+					h.onLog({ data, metadata, origin: { server: isServer } })
+				);
+			},
+			{ defer: true }
+		)
+	);
+	const data = untrack(fn);
+	ctx.handlers.forEach((h) =>
+		h.onLog({ data, metadata, origin: { server: isServer } })
+	);
 };

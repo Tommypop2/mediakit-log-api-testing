@@ -7,9 +7,9 @@ import {
 	useContext,
 } from "solid-js";
 import { isServer } from "solid-js/web";
+type ExecutionLocation = "server" | "client" | "both";
 class LogHandler {
-	// This API needs improving. An `onServer` flag is not particularly ergonomic
-	onServer: boolean = true;
+	execution: ExecutionLocation = "both";
 	onLog(log: Log<any>) {
 		throw new Error("This method should be overridden");
 	}
@@ -31,7 +31,6 @@ class ExampleLogger extends LogHandler {
 	}
 }
 class ExampleServerLogger extends LogHandler {
-	onServer = false;
 	onLog = (log: Log<any>) => {
 		"use server";
 		if (log.metadata)
@@ -58,12 +57,26 @@ type Log<T> = {
 	data: T;
 };
 // Allow the user to specify multiple handlers that are all called
-type LoggerData = { handlers: LogHandler[] };
+// type LoggerData = {
+// 	/**
+// 	 * Log handlers which run on the server when `log$` is called
+// 	 */
+// 	serverHandlers: LogHandler[];
+// 	/**
+// 	 * Log handlers which run on the client when `log$` is called. They don't run at all if called on the server
+// 	 */
+// 	clientHandlers: LogHandler[];
+// };
+type LoggerData = {
+	handlers: LogHandler[];
+};
 export const LoggerContext = createContext<LoggerData>();
 export const LogProvider: ParentComponent = (props) => {
 	return (
 		<LoggerContext.Provider
-			value={{ handlers: [new ExampleLogger(), new ExampleServerLogger()] }}
+			value={{
+				handlers: [new ExampleLogger(), new ExampleServerLogger()],
+			}}
 		>
 			{props.children}
 		</LoggerContext.Provider>
@@ -92,7 +105,7 @@ export const $log = <T,>(fn: () => T, metadata?: LogMetadata) => {
 	const data = untrack(fn);
 	// Don't execute non-ssr handlers on the server
 	ctx.handlers.forEach((h) =>
-		isServer && !h.onServer
+		isServer && h.execution == "client"
 			? {}
 			: h.onLog({ data, metadata, origin: { server: isServer } })
 	);

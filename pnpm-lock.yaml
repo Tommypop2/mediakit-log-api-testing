@@ -12,17 +12,17 @@ importers:
         specifier: ^0.29.4
         version: 0.29.4(solid-js@1.8.18)
       '@solidjs/router':
-        specifier: ^0.13.6
-        version: 0.13.6(solid-js@1.8.18)
+        specifier: ^0.14.1
+        version: 0.14.1(solid-js@1.8.18)
       '@solidjs/start':
-        specifier: ^1.0.2
-        version: 1.0.2(rollup@4.18.0)(solid-js@1.8.18)(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))
+        specifier: ^1.0.4
+        version: 1.0.4(rollup@4.18.0)(solid-js@1.8.18)(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))
       solid-js:
-        specifier: ^1.8.17
+        specifier: ^1.8.18
         version: 1.8.18
       vinxi:
-        specifier: ^0.3.12
-        version: 0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
+        specifier: ^0.3.14
+        version: 0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
 
 packages:
 
@@ -908,13 +908,13 @@ packages:
     peerDependencies:
       solid-js: '>=1.8.4'
 
-  '@solidjs/router@0.13.6':
-    resolution: {integrity: sha512-CdpFsBYoiJ/FQ4wZIamj3KEFRkmrYu5sVXM6PouNkmSENta1YJamsm9wa/VjaPmkw2RsnDnO0UvZ705v6EgOXQ==}
+  '@solidjs/router@0.14.1':
+    resolution: {integrity: sha512-GumQ4jbt5xDngLypAndC4EjapY/3DP0G8Az4YWEVQHdCtjHwB8IOm32eEBxE9lKpOffbtXV0r/0X0mofHJ1m5w==}
     peerDependencies:
       solid-js: ^1.8.6
 
-  '@solidjs/start@1.0.2':
-    resolution: {integrity: sha512-SRoFvSnL47O1hg4/Er2es2AVoOWRdGBm0C8h2KsHFjbiRe1r2AxsONHR9job+Hmzbl5icSaGmNoXoQ8qpTy4UA==}
+  '@solidjs/start@1.0.4':
+    resolution: {integrity: sha512-r+2gENJ+nIdbLR2QcFxw92PBYLBr8a7DBHc1Wy2/eAbW9uIddPz/ZHyHsWjFewrADcvfjLGG+bBGqM/vCTrpAw==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -2539,8 +2539,8 @@ packages:
   validate-html-nesting@1.2.2:
     resolution: {integrity: sha512-hGdgQozCsQJMyfK5urgFcWEqsSSrK63Awe0t/IMR0bZ0QMtnuaiHzThW81guu3qx9abLi99NEuiaN6P9gVYsNg==}
 
-  vinxi@0.3.12:
-    resolution: {integrity: sha512-YU/Scild/Rdy6qwgdILYRlO99Wp8ti2CmlMlYioEg7lRtxAST5iCFjviDya+BYQDgc3Pugh4KzOypVwjZknF2A==}
+  vinxi@0.3.14:
+    resolution: {integrity: sha512-z92mH3xmnnsodTAURFnfEg4FnCo95JnjjY08nyjl3Z69xVRtQ5V6ckfV9bMp/5G6yT52wnmoLXAfPRPF6vfG+A==}
     hasBin: true
 
   vite-plugin-inspect@0.7.42:
@@ -3444,15 +3444,15 @@ snapshots:
     dependencies:
       solid-js: 1.8.18
 
-  '@solidjs/router@0.13.6(solid-js@1.8.18)':
+  '@solidjs/router@0.14.1(solid-js@1.8.18)':
     dependencies:
       solid-js: 1.8.18
 
-  '@solidjs/start@1.0.2(rollup@4.18.0)(solid-js@1.8.18)(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))':
+  '@solidjs/start@1.0.4(rollup@4.18.0)(solid-js@1.8.18)(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))(vite@5.3.2(@types/node@20.14.9)(terser@5.31.1))':
     dependencies:
-      '@vinxi/plugin-directives': 0.3.1(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
-      '@vinxi/server-components': 0.3.3(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
-      '@vinxi/server-functions': 0.3.3(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
+      '@vinxi/plugin-directives': 0.3.1(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
+      '@vinxi/server-components': 0.3.3(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
+      '@vinxi/server-functions': 0.3.3(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
       defu: 6.1.4
       error-stack-parser: 2.1.4
       glob: 10.4.2
@@ -3542,7 +3542,7 @@ snapshots:
       consola: 3.2.3
       defu: 6.1.4
       get-port-please: 3.1.2
-      h3: 1.11.1
+      h3: 1.12.0
       http-shutdown: 1.2.2
       jiti: 1.21.6
       mlly: 1.7.1
@@ -3555,7 +3555,7 @@ snapshots:
     transitivePeerDependencies:
       - uWebSockets.js
 
-  '@vinxi/plugin-directives@0.3.1(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))':
+  '@vinxi/plugin-directives@0.3.1(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))':
     dependencies:
       '@babel/parser': 7.24.7
       acorn: 8.12.0
@@ -3566,29 +3566,29 @@ snapshots:
       magicast: 0.2.11
       recast: 0.23.9
       tslib: 2.6.3
-      vinxi: 0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
+      vinxi: 0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
 
-  '@vinxi/server-components@0.3.3(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))':
+  '@vinxi/server-components@0.3.3(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))':
     dependencies:
-      '@vinxi/plugin-directives': 0.3.1(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
+      '@vinxi/plugin-directives': 0.3.1(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
       acorn: 8.12.0
       acorn-loose: 8.4.0
       acorn-typescript: 1.4.13(acorn@8.12.0)
       astring: 1.8.6
       magicast: 0.2.11
       recast: 0.23.9
-      vinxi: 0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
+      vinxi: 0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
 
-  '@vinxi/server-functions@0.3.3(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))':
+  '@vinxi/server-functions@0.3.3(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))':
     dependencies:
-      '@vinxi/plugin-directives': 0.3.1(vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
+      '@vinxi/plugin-directives': 0.3.1(vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1))
       acorn: 8.12.0
       acorn-loose: 8.4.0
       acorn-typescript: 1.4.13(acorn@8.12.0)
       astring: 1.8.6
       magicast: 0.2.11
       recast: 0.23.9
-      vinxi: 0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
+      vinxi: 0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1)
 
   abbrev@1.1.1: {}
 
@@ -4417,7 +4417,7 @@ snapshots:
       crossws: 0.2.4
       defu: 6.1.4
       get-port-please: 3.1.2
-      h3: 1.11.1
+      h3: 1.12.0
       http-shutdown: 1.2.2
       jiti: 1.21.6
       mlly: 1.7.1
@@ -5201,7 +5201,7 @@ snapshots:
       anymatch: 3.1.3
       chokidar: 3.6.0
       destr: 2.0.3
-      h3: 1.11.1
+      h3: 1.12.0
       listhen: 1.7.2
       lru-cache: 10.3.0
       mri: 1.2.0
@@ -5244,7 +5244,7 @@ snapshots:
 
   validate-html-nesting@1.2.2: {}
 
-  vinxi@0.3.12(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1):
+  vinxi@0.3.14(@opentelemetry/api@1.9.0)(@types/node@20.14.9)(ioredis@5.4.1)(terser@5.31.1):
     dependencies:
       '@babel/core': 7.24.7
       '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.24.7)

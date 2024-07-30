@@ -3,9 +3,22 @@ import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
-import { Log, LogHandler, LogProvider } from "./components/LogContext";
+import {
+	ExecutionLocation,
+	Log,
+	LogHandler,
+	LogProvider,
+} from "./components/LogContext";
 class CustomHandler extends LogHandler {
-	onLog(log: Log<any>): void {
+	execution: ExecutionLocation = "client";
+	onLog(log: Log): void {
+		console.log(log.data);
+	}
+}
+class ServerLogger extends LogHandler {
+	execution: ExecutionLocation = "both";
+	onLog = (log: Log) => {
+		"use server";
 		console.log(log.data)
 	}
 }
@@ -14,7 +27,7 @@ export default function App() {
 		<Router
 			root={(props) => (
 				<MetaProvider>
-					<LogProvider handlers={[new CustomHandler()]}>
+					<LogProvider handlers={[new CustomHandler(), new ServerLogger()]}>
 						<Title>SolidStart - Basic</Title>
 						<a href="/">Index</a>
 						<a href="/about">About</a>

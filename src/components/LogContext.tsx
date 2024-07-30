@@ -7,7 +7,7 @@ import {
 	useContext,
 } from "solid-js";
 import { isServer } from "solid-js/web";
-export type ExecutionLocation = "server" | "client" | "both";
+export type ExecutionLocation = "ssr" | "client" | "both";
 export class LogHandler {
 	execution: ExecutionLocation = "both";
 	onLog(log: Log<any>) {
@@ -51,7 +51,7 @@ export class DefaultLogger extends LogHandler {
 export type LogMetadata = {
 	location: { filename: string; line: number };
 };
-export type Log<T> = {
+export type Log<T = any> = {
 	// Compiler would provide metadata object in `$log` call
 	metadata?: LogMetadata;
 	origin: { server: boolean };

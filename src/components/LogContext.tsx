@@ -7,14 +7,15 @@ import {
 	useContext,
 } from "solid-js";
 import { isServer } from "solid-js/web";
-type ExecutionLocation = "server" | "client" | "both";
-class LogHandler {
+export type ExecutionLocation = "server" | "client" | "both";
+export class LogHandler {
 	execution: ExecutionLocation = "both";
 	onLog(log: Log<any>) {
 		throw new Error("This method should be overridden");
 	}
 }
-class ExampleLogger extends LogHandler {
+export class DefaultLogger extends LogHandler {
+	execution: ExecutionLocation = "both";
 	onLog(log: Log<any>) {
 		if (log.metadata)
 			console.log(
@@ -30,27 +31,27 @@ class ExampleLogger extends LogHandler {
 			);
 	}
 }
-class ExampleServerLogger extends LogHandler {
-	onLog = (log: Log<any>) => {
-		"use server";
-		if (log.metadata)
-			console.log(
-				`(${log.origin.server ? "Server" : "Client"}) Output: ${
-					log.data
-				}, on line ${log.metadata.location.line} in file ${
-					log.metadata.location.filename
-				}`
-			);
-		else
-			console.log(
-				`(${log.origin.server ? "Server" : "Client"}) Output: ${log.data}`
-			);
-	};
-}
-type LogMetadata = {
+// class ExampleServerLogger extends LogHandler {
+// 	onLog = (log: Log<any>) => {
+// 		"use server";
+// 		if (log.metadata)
+// 			console.log(
+// 				`(${log.origin.server ? "Server" : "Client"}) Output: ${
+// 					log.data
+// 				}, on line ${log.metadata.location.line} in file ${
+// 					log.metadata.location.filename
+// 				}`
+// 			);
+// 		else
+// 			console.log(
+// 				`(${log.origin.server ? "Server" : "Client"}) Output: ${log.data}`
+// 			);
+// 	};
+// }
+export type LogMetadata = {
 	location: { filename: string; line: number };
 };
-type Log<T> = {
+export type Log<T> = {
 	// Compiler would provide metadata object in `$log` call
 	metadata?: LogMetadata;
 	origin: { server: boolean };
@@ -67,15 +68,17 @@ type Log<T> = {
 // 	 */
 // 	clientHandlers: LogHandler[];
 // };
-type LoggerData = {
+export type LoggerData = {
 	handlers: LogHandler[];
 };
 export const LoggerContext = createContext<LoggerData>();
-export const LogProvider: ParentComponent = (props) => {
+export const LogProvider: ParentComponent<LoggerData> = (
+	props
+) => {
 	return (
 		<LoggerContext.Provider
 			value={{
-				handlers: [new ExampleLogger(), new ExampleServerLogger()],
+				handlers: props.handlers ?? [new DefaultLogger()],
 			}}
 		>
 			{props.children}
@@ -95,15 +98,21 @@ export const $log = <T,>(fn: () => T, metadata?: LogMetadata) => {
 			fn,
 			(data) => {
 				// Include extra deep tracking logic here in the future
-				ctx.handlers.forEach((h) =>
-					h.onLog({ data, metadata, origin: { server: isServer } })
+				ctx.handlers.forEach(
+					(h) => {
+						h.onLog({ data, metadata, origin: { server: isServer } });
+					}
+					// h.onLog({ data, metadata, origin: { server: isServer } })
 				);
 			},
 			{ defer: true }
 		)
 	);
 	const data = untrack(fn);
+	// Execute all handlers that should be server-executed
+
 	// Don't execute non-ssr handlers on the server
+
 	ctx.handlers.forEach((h) =>
 		isServer && h.execution == "client"
 			? {}

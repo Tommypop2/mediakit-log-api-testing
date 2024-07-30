@@ -8,7 +8,7 @@ import {
 	Log,
 	LogHandler,
 	LogProvider,
-} from "./components/LogContext";
+} from "../logger/LogContext";
 class CustomHandler extends LogHandler {
 	execution: ExecutionLocation = "client";
 	onLog(log: Log): void {

@@ -1,7 +1,6 @@
 import { createSignal } from "solid-js";
 import "./Counter.css";
-import { $log } from "./LogContext";
-
+import { $log } from "../../logger/LogContext";
 export default function Counter() {
 	const [count, setCount] = createSignal(0);
 	$log(count);

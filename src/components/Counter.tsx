@@ -1,16 +1,17 @@
-import { createSignal } from "solid-js";
+import { Accessor, Setter } from "solid-js";
 import "./Counter.css";
-import { $log } from "../../logger/LogContext";
-export default function Counter() {
-	const [count, setCount] = createSignal(0);
-	$log(count);
+
+export default function Counter(props: {
+	count: Accessor<number>;
+	setCount: Setter<number>;
+}) {
 	return (
 		<button
 			class="increment"
-			onClick={() => setCount(count() + 1)}
+			onClick={() => props.setCount(props.count() + 1)}
 			type="button"
 		>
-			Clicks: {count()}
+			Clicks: {props.count()}
 		</button>
 	);
 }

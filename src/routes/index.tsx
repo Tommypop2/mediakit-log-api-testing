@@ -1,19 +1,22 @@
 import { Title } from "@solidjs/meta";
+import { createSignal } from "solid-js";
 import Counter from "~/components/Counter";
-
+import { LogInfo, LogProvider, log$ } from "~/components/LogContext";
+const serverLog = (d: any, metadata?: LogInfo) => {
+	"use server";
+	console.log("Server logging with Mediakit!", d);
+};
+const clientLog = (d: any, metadata?: LogInfo) => {
+	console.log("Client Logging with Mediakit!", d);
+};
 export default function Home() {
-  return (
-    <main>
-      <Title>Hello World</Title>
-      <h1>Hello world!</h1>
-      <Counter />
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
-    </main>
-  );
+	return (
+		<LogProvider onLog={[clientLog, serverLog]}>
+			{(() => {
+				const [count, setCount] = createSignal(0);
+				log$(count);
+				return <Counter count={count} setCount={setCount} />;
+			})()}
+		</LogProvider>
+	);
 }

@@ -6,21 +6,23 @@ import {
 	untrack,
 	useContext,
 } from "solid-js";
+import { isServer } from "solid-js/web";
 export type LogInfo = {
 	line: number;
 	file: string;
 };
+type LoggerFunction = (data: any, info?: LogInfo) => any;
+type Logger = {
+	executor: "clientOnly" | "serverOnly" | "isomorphic";
+	log: LoggerFunction;
+};
 export type LoggerData = {
-	onLog: ((data: any, info?: LogInfo) => any)[];
+	loggers: Logger[];
 };
 export const LoggerContext = createContext<LoggerData>();
 export const LogProvider: ParentComponent<LoggerData> = (props) => {
 	return (
-		<LoggerContext.Provider
-			value={{
-				onLog: props.onLog,
-			}}
-		>
+		<LoggerContext.Provider value={{ loggers: props.loggers }}>
 			{props.children}
 		</LoggerContext.Provider>
 	);
@@ -39,12 +41,21 @@ export const log$ = <T,>(fn: () => T, metadata?: LogInfo) => {
 			fn,
 			(data) => {
 				// Include extra deep tracking logic here in the future
-				ctx.onLog.forEach((log) => log(data, metadata));
+				ctx.loggers.forEach((logger) => logger.log(data, metadata));
 			},
 			{ defer: true }
 		)
 	);
 	// Do initial log
 	const data = untrack(fn);
-	ctx.onLog.forEach((log) => log(data, metadata));
+	for (const logger of ctx.loggers) {
+		const { executor, log } = logger;
+		if (executor === "isomorphic") {
+			log(data);
+		} else if (executor === "clientOnly" && !isServer) {
+			log(data);
+		} else if (executor === "serverOnly" && isServer) {
+			log(data);
+		}
+	}
 };

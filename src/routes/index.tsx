@@ -11,7 +11,15 @@ const clientLog = (d: any, metadata?: LogInfo) => {
 };
 export default function Home() {
 	return (
-		<LogProvider onLog={[clientLog, serverLog]}>
+		<LogProvider
+			loggers={[
+				{
+					executor: "clientOnly",
+					log: clientLog,
+				},
+				{ executor: "clientOnly", log: serverLog },
+			]}
+		>
 			{(() => {
 				const [count, setCount] = createSignal(0);
 				log$(count);

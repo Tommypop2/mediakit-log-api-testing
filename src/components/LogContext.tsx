@@ -13,7 +13,7 @@ export type LogInfo = {
 };
 type LoggerFunction = (data: any, info?: LogInfo) => any;
 type Logger = {
-	executor: "clientOnly" | "serverOnly" | "isomorphic";
+	runOn: "clientOnly" | "serverOnly" | "isomorphic";
 	log: LoggerFunction;
 };
 export type LoggerData = {
@@ -49,12 +49,12 @@ export const log$ = <T,>(fn: () => T, metadata?: LogInfo) => {
 	// Do initial log
 	const data = untrack(fn);
 	for (const logger of ctx.loggers) {
-		const { executor, log } = logger;
-		if (executor === "isomorphic") {
+		const { runOn, log } = logger;
+		if (runOn === "isomorphic") {
 			log(data);
-		} else if (executor === "clientOnly" && !isServer) {
+		} else if (runOn === "clientOnly" && !isServer) {
 			log(data);
-		} else if (executor === "serverOnly" && isServer) {
+		} else if (runOn === "serverOnly" && isServer) {
 			log(data);
 		}
 	}

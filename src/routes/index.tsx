@@ -14,10 +14,10 @@ export default function Home() {
 		<LogProvider
 			loggers={[
 				{
-					executor: "clientOnly",
+					runOn: "clientOnly",
 					log: clientLog,
 				},
-				{ executor: "clientOnly", log: serverLog },
+				{ runOn: "clientOnly", log: serverLog },
 			]}
 		>
 			{(() => {

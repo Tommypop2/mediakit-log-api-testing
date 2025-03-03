@@ -7,11 +7,11 @@ import {
 	useContext,
 } from "solid-js";
 import { isServer } from "solid-js/web";
-export type LogInfo = {
+export type LogMetadata = {
 	line: number;
 	file: string;
 };
-type LoggerFunction = (data: any, info?: LogInfo) => any;
+type LoggerFunction = (data: any, info?: LogMetadata) => any;
 type Logger = {
 	runOn: "clientOnly" | "serverOnly" | "isomorphic";
 	log: LoggerFunction;
@@ -34,7 +34,7 @@ export const useLoggerContext = () => {
 	return ctx;
 };
 
-export const log$ = <T,>(fn: () => T, metadata?: LogInfo) => {
+export const log$ = <T,>(fn: () => T, metadata?: LogMetadata) => {
 	const ctx = useLoggerContext();
 	createEffect(
 		on(

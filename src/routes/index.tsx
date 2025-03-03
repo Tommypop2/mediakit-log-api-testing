@@ -1,12 +1,12 @@
 import { Title } from "@solidjs/meta";
 import { createSignal } from "solid-js";
 import Counter from "~/components/Counter";
-import { LogInfo, LogProvider, log$ } from "~/components/LogContext";
-const serverLog = (d: any, metadata?: LogInfo) => {
+import { LogMetadata, LogProvider, log$ } from "~/components/LogContext";
+const serverLog = (d: any, metadata?: LogMetadata) => {
 	"use server";
 	console.log("Server logging with Mediakit!", d);
 };
-const clientLog = (d: any, metadata?: LogInfo) => {
+const clientLog = (d: any, metadata?: LogMetadata) => {
 	console.log("Client Logging with Mediakit!", d);
 };
 export default function Home() {
